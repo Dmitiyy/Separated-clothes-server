@@ -5,7 +5,6 @@ import * as dotenv from 'dotenv';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { ClothesModule } from './clothes/clothes.module';
 import { CostumesModule } from './costumes/costumes.module';
 
 dotenv.config({ path: '.env' });
@@ -15,7 +14,6 @@ const dbConnection = `mongodb+srv://clothes:${process.env.MONGO_PASS}@clothes.37
   imports: [
     MongooseModule.forRoot(dbConnection),
     UsersModule,
-    ClothesModule,
     CostumesModule
   ],
   controllers: [AppController],
