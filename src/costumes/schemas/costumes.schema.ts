@@ -14,13 +14,18 @@ export class Costumes {
   @Prop({required: true})
   color: string
 
-  @Prop({required: true, enum: [
-    'conference', 'business meeting', 'party', 'stroll', 'dating', 'another'
-  ]})
+  //* 'conference', 'business meeting', 'party', 'stroll', 'dating', 'another'
+  @Prop({required: true})
   event: string
 
   @Prop({required: true, enum: ['angry', 'sad', 'good', 'happy', 'excited']})
   mood: string
+
+  @Prop({default: Date.now()})
+  createdAt: Date
+
+  @Prop({default: Date.now()})
+  updatedAt: Date
 }
 
 export type CostumesDocument = Costumes & Document;
