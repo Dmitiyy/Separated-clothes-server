@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { uniq } from 'lodash';
+
 import { CreateCostumeDto } from './dto/create-costume.dto';
 import { GenerateParamsDto } from './dto/generate-params.dto';
 import { Costumes, CostumesDocument } from './schemas/costumes.schema';
@@ -41,5 +43,30 @@ export class CostumesService {
 
   async showAllCostumes(): Promise<Costumes[]> {
     return this.costumesModel.find();
+  }
+
+  async getNextStep(params: GenerateParamsDto) {
+    const { sex, mood, color } = params;
+
+    const eventualData: {color: string[], mood: string[], event: string[]} = {
+      color: [], mood: [], event: []
+    };
+
+    const fetchSomeData = async (params: {sex: string, color?: string, mood?: string}, name: string) => {
+      const data = await this.costumesModel.find({ ...params });
+
+      for (let element of data) {
+        if (name === 'event') {eventualData[name].push(...element[name].split(','))};
+        eventualData[name].push(element[name]);
+      };
+
+      eventualData[name] = [...uniq(eventualData[name])];
+    }
+
+    if (sex && sex.length !== 0) {await fetchSomeData({sex}, 'color')};  
+    if (color && color.length !== 0) {await fetchSomeData({sex, color}, 'mood')};
+    if (mood && mood.length !== 0) {await fetchSomeData({sex, color, mood}, 'event')};
+
+    return eventualData;
   }
 } 

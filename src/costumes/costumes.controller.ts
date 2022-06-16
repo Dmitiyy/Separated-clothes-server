@@ -21,4 +21,9 @@ export class CostumesController {
   getAllCostumes() {
     return this.costumesService.showAllCostumes();
   }
+
+  @Get('step')
+  nextStep(@Query() params: GenerateParamsDto) {
+    return this.costumesService.getNextStep(params);
+  }
 }
