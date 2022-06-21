@@ -60,6 +60,18 @@ export class CostumesService {
         eventualData[name].push(element[name]);
       };
 
+      if (name === 'event') {
+        const transformedData: Array<string[]> = [];
+        eventualData[name].forEach(item => {transformedData.push(item.split(','))});
+        let result: string = '';
+
+        for (let index: number = 0; index < transformedData.length; index++) {
+          result += transformedData[index].join(',');
+          if (index !== transformedData.length - 1) {result = result + ','};
+        }
+        eventualData[name] = result.split(',');
+      }
+
       eventualData[name] = [...uniq(eventualData[name])];
     }
 
