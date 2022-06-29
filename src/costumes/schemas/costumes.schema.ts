@@ -18,6 +18,9 @@ export class Costumes {
   @Prop({required: true})
   event: string
 
+  @Prop({default: 0})
+  likes: number
+
   @Prop({required: true, enum: ['angry', 'sad', 'good', 'happy', 'excited']})
   mood: string
 

@@ -2,6 +2,7 @@ import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { CostumesService } from './costumes.service';
 import { CreateCostumeDto } from './dto/create-costume.dto';
 import { GenerateParamsDto } from './dto/generate-params.dto';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Controller('costumes')
 export class CostumesController {
@@ -18,8 +19,8 @@ export class CostumesController {
   }
 
   @Get('all')
-  getAllCostumes() {
-    return this.costumesService.showAllCostumes();
+  getAllCostumes(@Query() pagination: PaginationDto) {
+    return this.costumesService.showAllCostumes(pagination);
   }
 
   @Get('step')

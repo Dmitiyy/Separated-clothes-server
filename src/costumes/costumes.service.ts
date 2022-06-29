@@ -6,6 +6,7 @@ import { uniq } from 'lodash';
 import { CreateCostumeDto } from './dto/create-costume.dto';
 import { GenerateParamsDto } from './dto/generate-params.dto';
 import { Costumes, CostumesDocument } from './schemas/costumes.schema';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Injectable()
 export class CostumesService {
@@ -41,8 +42,11 @@ export class CostumesService {
     return [...resultData];
   }
 
-  async showAllCostumes(): Promise<Costumes[]> {
-    return this.costumesModel.find();
+  async showAllCostumes(pagination: PaginationDto): Promise<Costumes[]> {
+    return this.costumesModel.find()
+      .limit(+pagination.limit)
+      .skip((+pagination.page - 1) * +pagination.limit)
+      .sort({ createdAt: 'desc' });
   }
 
   async getNextStep(params: GenerateParamsDto) {
