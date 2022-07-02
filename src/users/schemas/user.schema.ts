@@ -8,9 +8,6 @@ export class User {
   @Prop({ required: true })
   name: string
 
-  @Prop({ required: true, min: 8, select: true })
-  password: string
-
   @Prop({ required: true, unique: true })
   email: string
 
@@ -20,11 +17,11 @@ export class User {
   @Prop({ default: Date.now() })
   updatedAt: Date
 
-  @Prop({default: [], type: mongoose.Schema.Types.ObjectId, ref: 'Costumes'})
-  liked: Array<Costumes>
+  @Prop({default: [], type: Array<mongoose.Schema.Types.ObjectId>, ref: 'Costumes'})
+  liked: Array<mongoose.Schema.Types.ObjectId>
 
-  @Prop({default: [], type: mongoose.Schema.Types.ObjectId, ref: 'Costumes'})
-  saved: Array<Costumes>
+  @Prop({default: [], type: Array<mongoose.Schema.Types.ObjectId>, ref: 'Costumes'})
+  saved: Array<mongoose.Schema.Types.ObjectId>
 }
 
 export type UserDocument = User & Document;

@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { CostumesModule } from './costumes/costumes.module';
+import { GoogleStrategy } from './google.strategy';
 
 dotenv.config({ path: '.env' });
 const dbConnection = `mongodb+srv://clothes:${process.env.MONGO_PASS}@clothes.375s7.mongodb.net/Clothes?retryWrites=true&w=majority`;
@@ -17,6 +18,6 @@ const dbConnection = `mongodb+srv://clothes:${process.env.MONGO_PASS}@clothes.37
     CostumesModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, GoogleStrategy],
 })
 export class AppModule {}
