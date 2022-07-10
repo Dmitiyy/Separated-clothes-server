@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { User, UserDocument } from './schemas/user.schema';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 
 @Injectable()
 export class UsersService {
@@ -17,16 +18,19 @@ export class UsersService {
   }
 
   async createOne(name: string, email: string) {
+    let result: any;
     if (!name && !email) return {message: 'Fill the inputs', status: 'failure'};
-    
     const existingUser = await this.usersModel.find({ email });
-    if (existingUser.length !== 0) return {message: 'User is already exist', status: 'failure'}
-    
-    const user = await this.usersModel.create({ 
-      name, email, createdAt: Date.now(), updatedAt: Date.now() 
-    });
+
+    if (existingUser.length !== 0) {
+      result = existingUser;
+    } else {
+      result = await this.usersModel.create({ 
+        name, email, createdAt: Date.now(), updatedAt: Date.now() 
+      });
+    }
 
     const token = this.jwtService.sign({ email });
-    return { user, token, status: 'success' };
+    return { user: result, token, status: 'success' };
   }
 }
