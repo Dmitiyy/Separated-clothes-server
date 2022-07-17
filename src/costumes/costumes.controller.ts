@@ -3,6 +3,7 @@ import { CostumesService } from './costumes.service';
 import { CreateCostumeDto } from './dto/create-costume.dto';
 import { GenerateParamsDto } from './dto/generate-params.dto';
 import { PaginationDto } from './dto/pagination.dto';
+import { PopularDto } from './dto/popular.dto';
 
 @Controller('costumes')
 export class CostumesController {
@@ -26,5 +27,10 @@ export class CostumesController {
   @Get('step')
   nextStep(@Query() params: GenerateParamsDto) {
     return this.costumesService.getNextStep(params);
+  }
+
+  @Post('popular')
+  getPopular(@Body() data: PopularDto) {
+    return this.costumesService.getPopular(data);
   }
 }

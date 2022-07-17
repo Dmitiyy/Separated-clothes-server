@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
+import { Costumes } from 'src/costumes/schemas/costumes.schema';
 
 @Schema()
 export class User {
@@ -16,10 +17,10 @@ export class User {
   @Prop({ default: Date.now() })
   updatedAt: Date
 
-  @Prop({default: [], type: Array<mongoose.Schema.Types.ObjectId>, ref: 'Costumes'})
+  @Prop({default: [], type: Array<mongoose.Schema.Types.ObjectId>, ref: Costumes.name})
   liked: Array<mongoose.Schema.Types.ObjectId>
 
-  @Prop({default: [], type: Array<mongoose.Schema.Types.ObjectId>, ref: 'Costumes'})
+  @Prop({default: [], type: Array<mongoose.Schema.Types.ObjectId>, ref: Costumes.name})
   saved: Array<mongoose.Schema.Types.ObjectId>
 }
 

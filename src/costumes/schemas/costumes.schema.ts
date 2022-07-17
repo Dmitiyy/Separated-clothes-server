@@ -29,6 +29,9 @@ export class Costumes {
 
   @Prop({default: Date.now()})
   updatedAt: Date
+
+  @Prop({required: false, default: 0})
+  savedTimes: number
 }
 
 export type CostumesDocument = Costumes & Document;

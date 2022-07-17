@@ -16,14 +16,6 @@ export class AppService {
     const { email, firstName } = req.user;
     let user: User;
 
-    // const existingUser = await this.userService.findOne(req.user.email);
-    // user = existingUser;
-
-    // if (!existingUser) {
-    //   const createdUser = await this.userService.createOne(firstName, email);
-    //   user = createdUser;
-    // }
-
     const token = this.jwtService.sign({email});
 
     return {

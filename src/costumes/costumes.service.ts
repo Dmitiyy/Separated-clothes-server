@@ -7,6 +7,7 @@ import { CreateCostumeDto } from './dto/create-costume.dto';
 import { GenerateParamsDto } from './dto/generate-params.dto';
 import { Costumes, CostumesDocument } from './schemas/costumes.schema';
 import { PaginationDto } from './dto/pagination.dto';
+import { PopularDto } from './dto/popular.dto';
 
 @Injectable()
 export class CostumesService {
@@ -43,10 +44,12 @@ export class CostumesService {
   }
 
   async showAllCostumes(pagination: PaginationDto): Promise<Costumes[]> {
+    const { filterValue }: any = pagination;
+    
     return this.costumesModel.find()
+      .sort({ likes: filterValue, createdAt: 'desc' })
       .limit(+pagination.limit)
-      .skip((+pagination.page - 1) * +pagination.limit)
-      .sort({ createdAt: 'desc' });
+      .skip((+pagination.page - 1) * +pagination.limit);
   }
 
   async getNextStep(params: GenerateParamsDto) {
@@ -84,5 +87,11 @@ export class CostumesService {
     if (mood && mood.length !== 0) {await fetchSomeData({sex, color, mood}, 'event')};
 
     return eventualData;
+  }
+
+  async getPopular(data: PopularDto) {
+    const { value }: any = data;
+    const costumes = await this.costumesModel.find().sort({ likes: value });
+    return costumes;
   }
 } 
