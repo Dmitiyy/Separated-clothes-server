@@ -5,6 +5,8 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { JwtModule } from '@nestjs/jwt';
 import * as dotenv from 'dotenv';
+import { CostumesModule } from 'src/costumes/costumes.module';
+import { CostumesService } from 'src/costumes/costumes.service';
 
 dotenv.config({ path: '.env' });
 
@@ -15,6 +17,7 @@ dotenv.config({ path: '.env' });
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '30d' },
     }),
+    CostumesModule
   ],
   controllers: [UsersController],
   providers: [UsersService],

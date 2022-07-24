@@ -94,4 +94,28 @@ export class CostumesService {
     const costumes = await this.costumesModel.find().sort({ likes: value });
     return costumes;
   }
+
+  async changeProperty(increase: boolean, costumeId: string, property: string) {
+    const costume = await this.costumesModel.findById(costumeId);
+    let result: number = costume[property];
+
+    if (increase) {result++} else {result--};
+    await costume.updateOne({ [property]: result });
+  }
+
+  async addLike(increase: boolean, costumeId: string) {
+    const costume = await this.costumesModel.findById(costumeId);
+    let result: number = costume.likes;
+
+    if (increase) {result++} else {result--};
+    await costume.updateOne({ likes: result });
+  }
+
+  async addToSaved(increase: boolean, costumeId: string) {
+    const costume = await this.costumesModel.findById(costumeId);
+    let result: number = costume.savedTimes;
+
+    if (increase) {result++};
+    await costume.updateOne({ savedTimes: result });
+  }
 } 

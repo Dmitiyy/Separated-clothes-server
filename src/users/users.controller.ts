@@ -16,4 +16,9 @@ export class UsersController {
   likeCostume(@Body() data: LikeDto) {
     return this.userService.likeCostume(data);
   }
+
+  @Post('save')
+  saveCostume(@Body() data: LikeDto) {
+    return this.userService.saveCostume(data);
+  }
 }
